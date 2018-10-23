@@ -1,0 +1,33 @@
+<!--pages/goods/goods.wxml-->
+<view class="container">
+    <view class="hero">
+        <image class="hero-img" src="./beach.jpg" background-size="cover"></image>
+    </view>
+
+    <view class="goods-body">
+        <text class="list-title">商品列表</text>
+        <view class="goods-list">
+            <view class="goods-item" wx:for="{{goodsList.list}}" wx:key="{{item.id}}">
+                <view class="item-image"><image class="img" src="{{item.image}}"></image></view>
+                <view class="item-content">
+                    <view class="item-title">{{item.title}}</view>
+                    <view class="item-price content-element">积分 {{item.score}}</view>
+                    <view class="item-desc content-element">{{item.content}}</view>
+                    <view class="item-stock-block content-element">
+                        <text class="item-stock">{{item.stock}}</text>
+                        <text class="item-sale">{{item.sales}}</text>
+                    </view>
+                </view>
+                <view class="item-edit">
+                    <button class="edit-btn" data-serial="{{item.serial_id}}" bindtap="publishGoods" wx:if="{{item.status != 10}}">上架</button>
+                    <button class="edit-btn" data-serial="{{item.serial_id}}" bindtap="hiddenGoods" wx:if="{{item.status == 10}}">下架</button>
+                </view>
+            </view>
+            <view class="list-tip" bindtap="triggerPullDown">下拉刷新</view>
+        </view>
+    </view>
+
+    <navigator url="./form" open-type="navigate" class="fixed-pin">
+        <button class="fixed-btn">+</button>
+    </navigator>
+</view>

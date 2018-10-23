@@ -1,0 +1,87 @@
+/* pages/goods/form.wxss */
+.container, page {
+    background-color: #e7ecf2;
+}
+.container {
+    padding: 0.2rem 0.6rem 1rem;
+}
+.goods-form {
+  width: 100%;
+}
+.form-title {
+    color: #373a57;
+    font-size: 0.8rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+}
+
+.form-wrapper {
+    width: 100%;
+    background: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 1px 1px 3px 1px #ddd;
+}
+.form-wrapper+.form-wrapper {
+    margin-top: 0.5rem;
+}
+.form-uploader {
+
+}
+.form-content {
+    width: 100%;
+    padding: 0.8rem 0.8rem 1.2rem;
+    box-sizing: border-box;
+}
+.form-row {
+    font-size: 0.6rem;
+    margin-top: 0.4rem;
+}
+
+.form-input {
+    color: #9aadc6;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 2px solid #eceff6;
+}
+.form-input:focus {
+    border-bottom: 2px solid #9aadc6;
+}
+.tip-row {
+    margin-top: 0.8rem;
+    margin-bottom: 1.8rem;
+}
+.form-tip {
+    color: #7d7f8b;
+}
+.form-foot {
+    width: 100%;
+    margin-top: 0.6rem;
+}
+.combine-row {
+    display: flex;
+}
+.combine-input {
+    width: 64%;
+}
+.combine-btn {
+    width: 30%;
+    color: #fff;
+    background: #9aadc6;
+    border: none;
+    border-radius: 0.5rem;
+    font-size:0.8rem;
+}
+.block-btn {
+    width: 100%;
+    color: #fff;
+    border: none;
+    font-size: 0.8rem;
+    border-radius: 0.5rem;
+
+    background: #7a4bf5;
+    background: -webkit-gradient(linear, left right, left right, from(#9054eb), to(#7a4bf5));
+    background: -moz-linear-gradient(left, #9054eb, #7a4bf5);
+}
+.block-btn:hover {
+    background: #9054eb;
+}

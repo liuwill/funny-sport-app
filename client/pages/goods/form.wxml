@@ -1,0 +1,46 @@
+<!--pages/goods/form.wxml-->
+<view class="container">
+    <text class="form-title">创建商品</text>
+
+    <form class="goods-form" bindsubmit="createGoods" bindreset="formReset">
+        <view class="form-wrapper">
+            <view class="form-content">
+                <view class="form-row combine-row">
+                    <input name="image" class="form-input combine-input" value="{{imgUrl}}" placeholder-style="color:#cbd2d9" placeholder="商品主图" />
+                    <button class="combine-btn" bindtap="doUpload">上传</button>
+                </view>
+            </view>
+        </view>
+        <view class="form-wrapper">
+            <view class="form-content">
+                <view class="form-row">
+                    <input name="title" class="form-input" value="{{form.title}}" placeholder-style="color:#cbd2d9" placeholder="商品标题" />
+                </view>
+
+                <view class="form-row">
+                    <input name="content" class="form-input" value="{{form.content}}" placeholder-style="color:#cbd2d9" placeholder="商品描述" />
+                </view>
+
+                <view class="form-row">
+                    <input name="score" class="form-input" value="{{form.score}}" placeholder-style="color:#cbd2d9" placeholder="兑换积分" />
+                </view>
+
+                <view class="form-row">
+                    <input name="price" class="form-input" value="{{form.price}}" placeholder-style="color:#cbd2d9" placeholder="商品价格" />
+                </view>
+
+                <view class="form-row">
+                    <input name="stock" class="form-input" value="{{form.stock}}" placeholder-style="color:#cbd2d9" placeholder="库存" />
+                </view>
+
+                <view class="form-row tip-row">
+                    <text class="form-tip">商品创建之后，需要先上架，用户才能兑换。</text>
+                </view>
+            </view>
+        </view>
+
+        <view class="form-foot">
+            <button class="block-btn" formType="submit">创建</button>
+        </view>
+    </form>
+</view>
