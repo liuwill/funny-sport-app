@@ -2,7 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/addCgi/addCgi",
-    "pages/debug/debug",
+    "pages/admin/admin",
     "pages/goods/goods",
     "pages/goods/form"
   ],

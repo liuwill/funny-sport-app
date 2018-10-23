@@ -1,0 +1,47 @@
+<!--index.wxml-->
+<view class="container">
+    <!-- 用户登录测试 -->
+    <view class="userinfo">
+        <image
+            class="userinfo-avatar"
+            src="./avatar.jpg"
+            background-size="cover"
+        ></image>
+        <view class="userinfo-meta">
+            <text class="userinfo-nickname">管理员</text>
+            <text class="userinfo-nickname small">管理商品和兑换订单</text>
+        </view>
+    </view>
+
+    <view class="module-item">
+        <navigator url="../goods/goods" open-type="navigate" class="module-item-text">
+            <text>创建商品</text>
+        </navigator>
+    </view>
+
+    <view class="module-group">
+        <view class="module-item">
+            <view class="item-data" bindtap="visitUserInfo">
+                <text>用户信息</text>
+            </view>
+        </view>
+
+        <view class="module-item">
+            <view class="item-data" bindtap="checkStep">
+                <text>检查步数</text>
+            </view>
+        </view>
+
+        <view class="module-item">
+            <view class="item-data" bindtap="acceptStepAward">
+                <text>领取计步积分</text>
+            </view>
+        </view>
+    </view>
+
+    <view class="module-item">
+        <navigator url="../goods/goods" open-type="navigate" class="module-item-text">
+            <text>订单管理</text>
+        </navigator>
+    </view>
+</view>

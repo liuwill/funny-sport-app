@@ -38,7 +38,7 @@
     </view>
 
     <view class="uploader">
-        <navigator url="../debug/debug" open-type="navigate" class="uploader-text">
+        <navigator url="../admin/admin" open-type="navigate" class="uploader-text">
             <text>接口调试</text>
         </navigator>
     </view>

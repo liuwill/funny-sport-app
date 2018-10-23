@@ -27,7 +27,8 @@ Page({
       url: `${config.service.host}/weapp/demo/user`,
       login: true,
       success(result) {
-        util.showSuccess('请求成功完成')
+        const userData = result.data.data
+        util.showModel('用户：' + userData.msg.nickName, '省:' + userData.msg.province + ';市:' + userData.msg.city)
         that.setData({
           requestResult: JSON.stringify(result.data)
         })
