@@ -46,7 +46,7 @@
     </view>
 
     <view class="module-item">
-        <navigator url="../goods/goods" open-type="navigate" class="module-item-text">
+        <navigator url="../manage/order" open-type="navigate" class="module-item-text">
             <text>订单管理</text>
         </navigator>
     </view>

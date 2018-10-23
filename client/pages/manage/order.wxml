@@ -1,0 +1,4 @@
+<!--pages/order/manage.wxml-->
+<view class="container">
+    <text>pages/order/manage.wxml</text>
+</view>

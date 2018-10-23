@@ -16,7 +16,7 @@
 }
 .list-title {
     text-align: left;
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #555;
 }
 .goods-list {
@@ -32,7 +32,7 @@
     align-items: center;
     flex-flow: row;
 
-    font-size: 0.8rem;
+    font-size: 1rem;
     box-sizing: border-box;
     box-shadow: 1px 1px 3px 1px #ddd;
     padding: 0.3rem;
@@ -52,16 +52,15 @@
 .content-element {
     margin-top: 0.2rem;
 }
-
 .item-content {
     flex-basis: 40%;
     margin-left: 0.6rem;
-    font-size: 0.6rem;
+    font-size: 0.8rem;
     color: #949599;
 }
 .item-title {
     color: #616065;
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 .item-stock {
     float: left;
@@ -73,7 +72,7 @@
 .item-edit {
 }
 .edit-btn {
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: #444;
 }
 .edit-btn+.edit-btn {
@@ -81,7 +80,7 @@
 }
 .list-tip {
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 1rem;
     padding-top: 1rem;
     color: #949599;
 }
@@ -93,12 +92,14 @@
 
     width: 2.2rem;
     height: 2.2rem;
-    line-height: 2.2rem;
+    text-align: center;
 }
 .fixed-btn {
     background: #384f88;
     width: 100%;
-    height: 100%;
+    height: 2.2rem;
+    line-height: 2.2rem;
     color: #fff;
     opacity: 0.8;
+    text-align: center;
 }

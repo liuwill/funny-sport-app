@@ -1,0 +1,7 @@
+/* pages/order/manage.wxss */
+.container, page {
+    background-color: #F6F6F6;
+}
+.container {
+    padding: 0.2rem 0.6rem 1rem;
+}

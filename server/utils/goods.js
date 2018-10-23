@@ -27,7 +27,8 @@ module.exports = {
         FINISHED: 2,
         CANCEL: 3,
         ERROR: 4,
-        FAIL: 5
+        FAIL: 5,
+        FILED: 10
     },
     GOODS_ITEM_STATUS: {
         CREATED: 0,

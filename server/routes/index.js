@@ -13,7 +13,7 @@ const { auth: { authorizationMiddleware, validationMiddleware } } = require('../
 router.get('/demo', controllers.demo.hello)
 router.get('/demo/user', validationMiddleware, controllers.demo.user)
 
-router.post('/demo/decrypt', validationMiddleware, controllers.demo.decrypt)
+router.post('/utils/decrypt', validationMiddleware, controllers.demo.decrypt)
 
 // --- 步数检查功能 --- //
 // 检查是否有可以领取的积分
@@ -30,6 +30,10 @@ router.post('/goods/admin/create', validationMiddleware, controllers.goods.creat
 router.post('/goods/admin/publish', validationMiddleware, controllers.goods.publish)
 // 下架商品
 router.post('/goods/admin/hidden', validationMiddleware, controllers.goods.hidden)
+
+// --- 订单相关接口 --- //
+// 列出所有订单
+router.get('/order/admin/list', controllers.order.listAdmin)
 
 // 获取可用商品列表
 router.get('/goods/list', controllers.goods.list)
