@@ -35,6 +35,7 @@ Page({
 
     publishGoods: function (e) {
         let that = this
+        util.showBusy('请求中...')
         qcloud.request({
             url: `${config.service.host}/weapp/goods/admin/publish`,
             // login: true,
@@ -57,6 +58,7 @@ Page({
     },
     hiddenGoods: function (e) {
         let that = this
+        util.showBusy('请求中...')
         qcloud.request({
             url: `${config.service.host}/weapp/goods/admin/hidden`,
             // login: true,

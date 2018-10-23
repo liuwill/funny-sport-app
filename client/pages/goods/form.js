@@ -32,6 +32,7 @@ Page({
         }
     }
 
+    util.showBusy('请求中...')
     qcloud.request({
       url: `${config.service.host}/weapp/goods/admin/create`,
       // login: true,

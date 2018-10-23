@@ -39,7 +39,7 @@
 
     <view class="uploader">
         <navigator url="../admin/admin" open-type="navigate" class="uploader-text">
-            <text>接口调试</text>
+            <text>系统管理员入口</text>
         </navigator>
     </view>
 </view>

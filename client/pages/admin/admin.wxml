@@ -27,8 +27,14 @@
         </view>
 
         <view class="module-item">
+            <view class="item-data" bindtap="viewRunData">
+                <text>查看当前步数</text>
+            </view>
+        </view>
+
+        <view class="module-item">
             <view class="item-data" bindtap="checkStep">
-                <text>检查步数</text>
+                <text>检查步数积分</text>
             </view>
         </view>
 

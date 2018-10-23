@@ -13,6 +13,8 @@ const { auth: { authorizationMiddleware, validationMiddleware } } = require('../
 router.get('/demo', controllers.demo.hello)
 router.get('/demo/user', validationMiddleware, controllers.demo.user)
 
+router.post('/demo/decrypt', validationMiddleware, controllers.demo.decrypt)
+
 // --- 步数检查功能 --- //
 // 检查是否有可以领取的积分
 router.post('/award/check/step', validationMiddleware, controllers.award.checkStep)
