@@ -23,7 +23,7 @@
                     <button class="edit-btn" data-serial="{{item.serial_id}}" bindtap="hiddenGoods" wx:if="{{item.status == 10}}">下架</button>
                 </view>
             </view>
-            <view class="list-tip" bindtap="triggerPullDown">下拉刷新</view>
+            <view class="list-tip" bindtap="triggerLoadMore">加载更多</view>
         </view>
     </view>
 

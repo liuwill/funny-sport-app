@@ -80,7 +80,7 @@ Page({
         })
     },
 
-    triggerPullDown: function () {
+    triggerLoadMore: function () {
         wx.startPullDownRefresh()
     },
     getGoodsInfo: function () { },

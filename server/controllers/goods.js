@@ -120,6 +120,31 @@ module.exports = {
             total: goodsList.length
         }
     },
+    listAdminPage: async (ctx) => {
+        const httpRequest = ctx.request.query
+        if (!httpRequest.start || isNaN(httpRequest.start)) {
+            httpRequest.start = 0
+        }
+        let pageStart = Number(httpRequest.start)
+        let pageSize = 20
+        if (httpRequest.size && !isNaN(httpRequest.size)) {
+            pageSize = httpRequest.size
+        }
+
+        const countData = await mysql('cAwardGoods').count('id as count').whereNot('status', goodsUtils.GOODS_ITEM_STATUS.DELETED)
+        const goodsList = await mysql('cAwardGoods').select('*').whereNot('status', goodsUtils.GOODS_ITEM_STATUS.DELETED)
+            .orderBy('status', 'desc').orderBy('id', 'desc')
+            .limit(pageSize).offset(pageStart)
+
+        let total = countData[0]['count']
+        const hasMore = (total - pageStart) > goodsList.length
+        ctx.state.data = {
+            list: goodsList,
+            total: total,
+            hasMore,
+            lastIndex: pageStart + goodsList.length
+        }
+    },
     publish: async (ctx) => {
         const httpRequest = ctx.request.body
         const PERMIT_STATUS = [goodsUtils.GOODS_ITEM_STATUS.CREATED, goodsUtils.GOODS_ITEM_STATUS.HIDDEN]

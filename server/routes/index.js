@@ -24,6 +24,7 @@ router.post('/award/accept/step', validationMiddleware, controllers.award.accept
 // --- 商品相关接口 --- //
 // 列出所有商品
 router.get('/goods/admin/list', controllers.goods.listAdmin)
+router.get('/goods/admin/list/page', controllers.goods.listAdminPage)
 // 创建商品
 router.post('/goods/admin/create', validationMiddleware, controllers.goods.create)
 // 发布商品
@@ -34,6 +35,12 @@ router.post('/goods/admin/hidden', validationMiddleware, controllers.goods.hidde
 // --- 订单相关接口 --- //
 // 列出所有订单
 router.get('/order/admin/list', controllers.order.listAdmin)
+router.get('/order/admin/list/page', controllers.order.listAdminPage)
+// 列出用户的订单
+router.get('/order/list', validationMiddleware, controllers.order.myOrders)
+router.get('/order/list/page', validationMiddleware, controllers.order.myOrdersPage)
+// 处理订单
+router.post('/order/admin/confirm', validationMiddleware, controllers.order.confirm)
 
 // 获取可用商品列表
 router.get('/goods/list', controllers.goods.list)
