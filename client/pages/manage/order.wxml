@@ -1,4 +1,14 @@
 <!--pages/order/manage.wxml-->
 <view class="container">
+    <view class="header">
+        <view class="header-tab">订单管理</view>
+    </view>
+    <view class="main">
+        <view class="order-list">
+
+            <view class="list-tip" wx:if="{{hasMore}}" bindtap="loadMore">加载更多</view>
+            <view class="list-tip" wx:if="{{!hasMore}}">-- 已经到底了 --</view>
+        </view>
+    </view>
     <text>pages/order/manage.wxml</text>
 </view>

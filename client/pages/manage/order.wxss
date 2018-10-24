@@ -2,6 +2,40 @@
 .container, page {
     background-color: #F6F6F6;
 }
-.container {
-    padding: 0.2rem 0.6rem 1rem;
+.header {
+    width: 100%;
+    text-align: center;
+    background-color: #fff;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 3px 1px #ddd;
+}
+.header-tab {
+    display: inline-block;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 0.8rem;
+    color: #3c3c3c;
+    padding: 0 6px;
+
+    border-bottom: 6rpx solid #ff5d63;
+}
+.main {
+    width: 100%;
+    padding: 0.6rem;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+
+  padding-top: 0.6rem;
+  box-sizing: border-box;
+}
+.list-tip {
+    text-align: center;
+    font-size: 1rem;
+    padding-top: 1rem;
+    color: #949599;
 }

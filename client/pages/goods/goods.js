@@ -3,6 +3,7 @@
 var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var config = require('../../config')
 var util = require('../../utils/util.js')
+var generalUtil = require('../../utils/general.js')
 
 Page({
 
@@ -11,19 +12,33 @@ Page({
      */
     data: {
         requestResult: {},
-        goodsList: {
-            list: [],
-        }
+        hasMore: true,
+        start: 0,
+        goodsData: {},
+        goodsList: []
     },
 
-    listGoods: function () {
+    listGoods: function (reload) {
+        let queryStart = this.data.start
+        let currentList = this.data.goodsList
+        if (reload) {
+            queryStart = 0
+            currentList = []
+        }
         let that = this
+
         qcloud.request({
-            url: `${config.service.host}/weapp/goods/admin/list`,
+            url: generalUtil.buildGetUrl(`${config.service.host}/weapp/goods/admin/list/page`, {
+                start: queryStart
+            }),
             success(result) {
                 util.showSuccess('加载成功')
+                const response = result.data.data
                 that.setData({
-                    goodsList: result.data.data
+                    goodsData: response,
+                    goodsList: currentList.concat(response.list),
+                    hasMore: response.hasMore,
+                    start: response.lastIndex || 0
                 })
             },
             fail(error) {
@@ -45,7 +60,7 @@ Page({
             method: 'POST',
             success(result) {
                 util.showSuccess('上架成功')
-                that.listGoods()
+                that.listGoods(true)
                 // that.setData({
                 //   requestResult: JSON.stringify(result.data)
                 // })
@@ -68,7 +83,7 @@ Page({
             method: 'POST',
             success(result) {
                 util.showSuccess('下架成功')
-                that.listGoods()
+                that.listGoods(true)
                 // that.setData({
                 //   requestResult: JSON.stringify(result.data)
                 // })
@@ -81,7 +96,8 @@ Page({
     },
 
     triggerLoadMore: function () {
-        wx.startPullDownRefresh()
+        this.listGoods()
+        // wx.startPullDownRefresh()
     },
     getGoodsInfo: function () { },
 
@@ -89,7 +105,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        this.listGoods()
+        this.listGoods(true)
     },
 
     /**
@@ -143,7 +159,7 @@ Page({
 
     onPullDownRefresh: function () {
         var context = this
-        this.listGoods()
+        this.listGoods(true)
 
         wx.stopPullDownRefresh();
     }
