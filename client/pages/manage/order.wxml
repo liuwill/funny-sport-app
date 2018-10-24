@@ -6,11 +6,24 @@
     <view class="main">
         <view class="order-list">
             <view class="order-item" wx:for="{{orderList}}" wx:key="{{item.id}}">
-
+                <view class="order-goods">
+                    <view class="meta-goods">
+                        <view class="meta-price">{{item.goods.price}}</view>
+                        <view class="meta-title">{{item.goods.title}}</view>
+                    </view>
+                    <view class="meta-score"><sup>$</sup>{{item.score}}</view>
+                </view>
+                <view class="order-user">
+                    <view class="meta-user-name">{{item.user.nickname}}</view>
+                    <view class="meta-user-city">来自：{{item.user.city}}</view>
+                    <view class="meta-order-create">{{item.create_time_show}}</view>
+                </view>
+                <view class="order-status">
+                    <button class="confirm-btn" data-orderId="{{item.order_id}}" wx:if="{{item.status === 1 }}" bindtap="confirmOrder">确认</button>
+                </view>
             </view>
             <view class="list-tip" wx:if="{{hasMore}}" bindtap="loadMore">加载更多</view>
             <view class="list-tip" wx:if="{{!hasMore}}">-- 已经到底了 --</view>
         </view>
     </view>
-    <text>pages/order/manage.wxml</text>
 </view>

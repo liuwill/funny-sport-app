@@ -16,6 +16,30 @@ Page({
         orderData: {}
     },
 
+    confirmOrder: function(e) {
+        let that = this
+        util.showBusy('请求中...')
+        qcloud.request({
+            url: `${config.service.host}/weapp/order/admin/confirm`,
+            // login: true,
+            data: {
+                order_id: e.target.dataset.orderid
+            },
+            method: 'POST',
+            success(result) {
+                util.showSuccess('处理成功')
+                that.loadOrderList(true)
+                // that.setData({
+                //   requestResult: JSON.stringify(result.data)
+                // })
+            },
+            fail(error) {
+                util.showModel('操作失败', error);
+                console.log('request fail', error);
+            }
+        })
+    },
+
     loadOrderList: function (reload) {
         let queryStart = this.data.start
         let currentList = this.data.orderList

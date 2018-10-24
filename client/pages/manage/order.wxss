@@ -35,16 +35,78 @@
 }
 .order-item {
     display: flex;
+    flex-direction: column;
     background: #fff;
 
     font-size: 1rem;
     box-sizing: border-box;
     box-shadow: 1px 1px 3px 1px #ddd;
-    padding: 0.3rem;
+    padding: 0.5rem 0.3rem;
+    border-radius: 0.3rem;
 }
 .order-item+.order-item {
     margin-top: 0.4rem;
 }
+.order-goods {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.meta-goods {
+    color: #5d5d5d;
+    box-sizing: border-box;
+    padding-left: 0.4rem;
+}
+.meta-title {
+    font-size: 0.7rem;
+}
+.meta-price {
+    font-size: 1rem;
+}
+.meta-score {
+    color:#cc7b99;
+    font-size:0.8rem;
+    height:1.8rem;
+    line-height:1.8rem;
+    padding:0 1.5rem;
+    border:1px solid #eee;
+    background:#f3f3f3;
+    border-radius:1rem 0 0 1rem;
+}
+.order-user {
+    margin-top: 0.8rem;
+    padding-left: 0.4rem;
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+.meta-user-name {
+    font-weight: bolder;
+    font-size: 0.8rem;
+    color: #626262;
+}
+.meta-user-city {
+    font-size: 0.7rem;
+    color: #7b7b7b;
+}
+.meta-order-create {
+    font-size: 0.7rem;
+    color: #7b7b7b;
+}
+.order-status {
+    text-align: right;
+
+    margin-top: 0.5rem;
+    color: #7f55c4;
+}
+.confirm-btn {
+    font-size: 0.8rem;
+    color: #7f55c4;
+    align-self: flex-end;
+}
+
 .list-tip {
     text-align: center;
     font-size: 1rem;

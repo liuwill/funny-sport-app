@@ -27,6 +27,40 @@ module.exports = {
             .orderBy('status').orderBy('id', 'desc')
             .limit(pageSize).offset(pageStart)
 
+        if (orderList.length) {
+            let goodsIds = []
+            let userIds = []
+            orderList.forEach(item => {
+                goodsIds.push(item.serial_id)
+                userIds.push(item.user_id)
+                item.create_time_show = new Date(item.create_time).toLocaleString()
+            })
+
+            const parallelResult = await Promise.all([
+                mysql('cAwardGoods').select('*').whereIn('serial_id', goodsIds),
+                mysql('cUserInfo').select('*').whereIn('id', userIds)
+            ])
+
+            let orderGoodsMap = {}
+            let orderUserMap = {}
+            if (parallelResult[0] && parallelResult[0].length) {
+                orderGoodsMap = parallelResult[0].reduce((result, current) => {
+                    result[current.serial_id] = current
+                    return result
+                }, {})
+            }
+            if (parallelResult[1] && parallelResult[1].length) {
+                orderUserMap = parallelResult[1].reduce((result, current) => {
+                    result[`${current.id}`] = current
+                    return result
+                }, {})
+            }
+            orderList.forEach(item => {
+                item.goods = orderGoodsMap[item.serial_id] || {}
+                item.user = orderUserMap[`${item.user_id}`] || {}
+            })
+        }
+
         let orderCount = orderCountData[0]['count']
         const hasMore = (orderCount - pageStart) > orderList.length
         ctx.state.data = {
@@ -112,7 +146,7 @@ module.exports = {
             return
         }
         const orderItem = orderList[0]
-        if (!orderItem.status !== goodsUtils.ORDER_STATUS.PAID) {
+        if (orderItem.status !== goodsUtils.ORDER_STATUS.PAID) {
             ctx.state.code = -1
             return
         }
