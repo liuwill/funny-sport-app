@@ -24,6 +24,31 @@ module.exports = {
             total: goodsList.length
         }
     },
+    listPage: async (ctx) => {
+        const httpRequest = ctx.request.query
+        if (!httpRequest.start || isNaN(httpRequest.start)) {
+            httpRequest.start = 0
+        }
+        let pageStart = Number(httpRequest.start)
+        let pageSize = 20
+        if (httpRequest.size && !isNaN(httpRequest.size)) {
+            pageSize = httpRequest.size
+        }
+
+        const countData = await mysql('cAwardGoods').count('id as count').whereNot('status', goodsUtils.GOODS_ITEM_STATUS.PUBLISHED)
+        const goodsList = await mysql('cAwardGoods').select('*')
+            .where({ status: goodsUtils.GOODS_ITEM_STATUS.PUBLISHED }).orderBy('id', 'desc')
+            .limit(pageSize).offset(pageStart)
+
+        let total = countData[0]['count']
+        const hasMore = (total - pageStart) > goodsList.length
+        ctx.state.data = {
+            list: goodsList,
+            total: total,
+            hasMore,
+            lastIndex: pageStart + goodsList.length
+        }
+    },
     info: async (ctx) => {
         const httpRequest = ctx.request.query
         const goodsList = await mysql('cAwardGoods').select('*').where({
@@ -34,7 +59,7 @@ module.exports = {
         }
     },
     exchange: async (ctx, next) => {
-        const httpRequest = ctx.request.query
+        const httpRequest = ctx.request.body
         const goodsList = await mysql('cAwardGoods').select('*').where({
             serial_id: httpRequest['serial_id'],
             status: goodsUtils.GOODS_ITEM_STATUS.PUBLISHED

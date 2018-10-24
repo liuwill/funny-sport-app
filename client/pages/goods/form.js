@@ -11,25 +11,25 @@ Page({
   data: {
     imgUrl: '',
     form: {
-        image: '',
-        title: '',
-        content: '',
-        score: '',
-        price: '',
-        stock: ''
+      image: '',
+      title: '',
+      content: '',
+      score: '',
+      price: '',
+      stock: ''
     }
   },
 
-  createGoods: function(e) {
+  createGoods: function (e) {
     var that = this
     const formData = Object.assign({
-        create_time: new Date()
+      create_time: new Date()
     }, e.detail.value, { image: this.data.imgUrl })
     for (let key in formData) {
-        if (!formData[key]) {
-            util.showModel('表单未填完', key);
-            return
-        }
+      if (!formData[key]) {
+        util.showModel('表单未填完', key);
+        return
+      }
     }
 
     util.showBusy('请求中...')
@@ -58,46 +58,46 @@ Page({
 
     // 选择图片
     wx.chooseImage({
-        count: 1,
-        sizeType: ['compressed'],
-        sourceType: ['album', 'camera'],
-        success: function(res){
-            util.showBusy('正在上传')
-            var filePath = res.tempFilePaths[0]
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        util.showBusy('正在上传')
+        var filePath = res.tempFilePaths[0]
 
-            // 上传图片
-            wx.uploadFile({
-                url: config.service.uploadUrl,
-                filePath: filePath,
-                name: 'file',
+        // 上传图片
+        wx.uploadFile({
+          url: config.service.uploadUrl,
+          filePath: filePath,
+          name: 'file',
 
-                success: function(res){
-                    util.showSuccess('上传图片成功')
-                    console.log(res)
-                    res = JSON.parse(res.data)
-                    console.log(res)
-                    that.setData({
-                        imgUrl: res.data.imgUrl
-                    })
-                },
-
-                fail: function(e) {
-                    util.showModel('上传图片失败')
-                }
+          success: function (res) {
+            util.showSuccess('上传图片成功')
+            console.log(res)
+            res = JSON.parse(res.data)
+            console.log(res)
+            that.setData({
+              imgUrl: res.data.imgUrl
             })
+          },
 
-        },
-        fail: function(e) {
-            console.error(e)
-        }
+          fail: function (e) {
+            util.showModel('上传图片失败')
+          }
+        })
+
+      },
+      fail: function (e) {
+        console.error(e)
+      }
     })
-},
-
-  formSubmit: function () {
-      console.log('111111111')
   },
 
-  formReset: function () {},
+  formSubmit: function () {
+    console.log('111111111')
+  },
+
+  formReset: function () { },
   /**
    * 生命周期函数--监听页面加载
    */

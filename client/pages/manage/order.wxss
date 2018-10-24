@@ -33,6 +33,18 @@
   padding-top: 0.6rem;
   box-sizing: border-box;
 }
+.order-item {
+    display: flex;
+    background: #fff;
+
+    font-size: 1rem;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 3px 1px #ddd;
+    padding: 0.3rem;
+}
+.order-item+.order-item {
+    margin-top: 0.4rem;
+}
 .list-tip {
     text-align: center;
     font-size: 1rem;

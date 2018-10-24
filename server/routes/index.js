@@ -44,6 +44,7 @@ router.post('/order/admin/confirm', validationMiddleware, controllers.order.conf
 
 // 获取可用商品列表
 router.get('/goods/list', controllers.goods.list)
+router.get('/goods/list/page', controllers.goods.listPage)
 // 单个商品信息查询
 router.get('/goods/info', controllers.goods.info)
 // 兑换商品
@@ -53,7 +54,8 @@ router.post('/goods/exchange', validationMiddleware, controllers.goods.exchange)
 // 登录接口
 router.get('/login', authorizationMiddleware, controllers.login)
 // 用户信息接口（可以用来验证登录态）
-router.get('/user', validationMiddleware, controllers.user)
+router.get('/user', validationMiddleware, controllers.user.wechat)
+router.get('/user/data', validationMiddleware, controllers.user.data)
 
 // --- 图片上传 Demo --- //
 // 图片上传接口，小程序端可以直接将 url 填入 wx.uploadFile 中

@@ -5,7 +5,9 @@
     </view>
     <view class="main">
         <view class="order-list">
+            <view class="order-item" wx:for="{{orderList}}" wx:key="{{item.id}}">
 
+            </view>
             <view class="list-tip" wx:if="{{hasMore}}" bindtap="loadMore">加载更多</view>
             <view class="list-tip" wx:if="{{!hasMore}}">-- 已经到底了 --</view>
         </view>

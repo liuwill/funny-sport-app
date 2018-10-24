@@ -1,3 +1,4 @@
+// pages/goods/shop.js
 // pages/goods/goods.js
 
 var qcloud = require('../../vendor/wafer2-client-sdk/index')
@@ -15,9 +16,23 @@ Page({
     hasMore: true,
     start: 0,
     goodsData: {},
-    goodsList: []
+    goodsList: [],
+    userData: {}
   },
 
+  loadUser: function () {
+    let that = this
+
+    qcloud.request({
+      url: generalUtil.buildGetUrl(`${config.service.host}/weapp/user/data`),
+      success(result) {
+        const response = result.data.data
+        that.setData({
+          userData: response.user
+        })
+      }
+    })
+  },
   listGoods: function (reload) {
     let queryStart = this.data.start
     let currentList = this.data.goodsList
@@ -28,7 +43,7 @@ Page({
     let that = this
 
     qcloud.request({
-      url: generalUtil.buildGetUrl(`${config.service.host}/weapp/goods/admin/list/page`, {
+      url: generalUtil.buildGetUrl(`${config.service.host}/weapp/goods/list/page`, {
         start: queryStart
       }),
       success(result) {
@@ -48,42 +63,21 @@ Page({
     })
   },
 
-  publishGoods: function (e) {
+  exchangeGoods: function (e) {
     let that = this
     util.showBusy('请求中...')
     qcloud.request({
-      url: `${config.service.host}/weapp/goods/admin/publish`,
+      url: `${config.service.host}/weapp/goods/exchange`,
       // login: true,
       data: {
         serial_id: e.target.dataset.serial
       },
       method: 'POST',
       success(result) {
-        util.showSuccess('上架成功')
-        that.listGoods(true)
-        // that.setData({
-        //   requestResult: JSON.stringify(result.data)
-        // })
-      },
-      fail(error) {
-        util.showModel('操作失败', error);
-        console.log('request fail', error);
-      }
-    })
-  },
-  hiddenGoods: function (e) {
-    let that = this
-    util.showBusy('请求中...')
-    qcloud.request({
-      url: `${config.service.host}/weapp/goods/admin/hidden`,
-      // login: true,
-      data: {
-        serial_id: e.target.dataset.serial
-      },
-      method: 'POST',
-      success(result) {
-        util.showSuccess('下架成功')
-        that.listGoods(true)
+        util.showSuccess('下单成功')
+        wx.navigateTo({
+          url: '../manage/order'
+        })
         // that.setData({
         //   requestResult: JSON.stringify(result.data)
         // })
@@ -99,13 +93,13 @@ Page({
     this.listGoods()
     // wx.startPullDownRefresh()
   },
-  getGoodsInfo: function () { },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.listGoods(true)
+    this.loadUser()
   },
 
   /**
