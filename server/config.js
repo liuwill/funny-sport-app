@@ -52,7 +52,7 @@ const configFields = {
     MYSQL_HOST: 'host',
     MYSQL_POST: 'port',
     MYSQL_USER: 'user',
-    MYSQL_SCHEMA: 'db',
+    MYSQL_DATABASE: 'db',
     MYSQL_PASSWORD: 'pass'
 }
 for (let item in configFields) {

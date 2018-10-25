@@ -3,26 +3,30 @@ version: '3.1'
 services:
 
   db-server:
+    hostname: db-server
     image: mariadb
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: test
+      MYSQL_DATABASE: money_tree
     networks:
       - server
       - wechat
 
   app-server:
+    hostname: app-server
     image: node:8.12-alpine
     restart: always
     command: sh /usr/src/app/server/start.sh
     ports:
-      - 8001:8080
+      - 8001:5757
     volumes:
       - ./:/usr/src/app
     environment:
       - MYSQL_USER=root
       - MYSQL_HOST=db-server
       - MYSQL_PASSWORD=test
+      - MYSQL_DATABASE=money_tree
     links:
       - db-server
     networks:
