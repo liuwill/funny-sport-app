@@ -6,7 +6,10 @@ services:
     hostname: db-server
     image: mariadb
     restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
     environment:
+      TZ: Asia/Shanghai
       MYSQL_ROOT_PASSWORD: test
       MYSQL_DATABASE: money_tree
     networks:
@@ -22,7 +25,9 @@ services:
       - 8001:5757
     volumes:
       - ./:/usr/src/app
+      - /etc/localtime:/etc/localtime:ro
     environment:
+      - TZ=Asia/Shanghai
       - MYSQL_USER=root
       - MYSQL_HOST=db-server
       - MYSQL_PASSWORD=test

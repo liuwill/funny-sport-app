@@ -14,16 +14,24 @@
         </view>
     </view>
 
-    <view class="module-item">
+    <view class="module-item" wx:if="{{logged}}">
         <navigator url="../goods/goods" open-type="navigate" class="module-item-text">
             <text>商品管理</text>
         </navigator>
     </view>
 
-    <view class="module-item">
-        <navigator url="../manage/order" open-type="navigate" class="module-item-text">
-            <text>订单管理</text>
-        </navigator>
+    <view class="module-group" wx:if="{{logged}}">
+        <view class="module-item">
+            <navigator url="../manage/order" open-type="navigate" class="module-item-text">
+                <text>订单管理</text>
+            </navigator>
+        </view>
+
+        <view class="module-item">
+            <navigator url="../goods/shop" open-type="navigate" class="module-item-text">
+                <text>管理员下单</text>
+            </navigator>
+        </view>
     </view>
 
     <view class="module-group">
@@ -37,12 +45,6 @@
             <view class="item-data" bindtap="getLocation">
                 <text>地理位置</text>
             </view>
-        </view>
-
-        <view class="module-item">
-            <navigator url="../goods/shop" open-type="navigate" class="module-item-text">
-                <text>管理员下单</text>
-            </navigator>
         </view>
     </view>
 

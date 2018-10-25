@@ -1,6 +1,7 @@
 const qcloud = require('../qcloud')
 const { mysql } = qcloud
 const generalUtils = require('../utils/general')
+const MAX_DAILY_STEP = 100000
 
 module.exports = {
     checkStep: async (ctx) => {
@@ -26,7 +27,7 @@ module.exports = {
             user_id: existUser.id
         }))
         const currentStep = todayStep[0]['step'] || 0
-        if (currentStep >= httpRequest.step) {
+        if (currentStep >= httpRequest.step || httpRequest.step > MAX_DAILY_STEP) {
             ctx.state.code = -1
             return
         }
@@ -62,7 +63,7 @@ module.exports = {
             user_id: existUser.id
         }))
         const currentStep = todayStep[0]['step'] || 0
-        if (currentStep >= httpRequest.step) {
+        if (currentStep >= httpRequest.step || httpRequest.step > MAX_DAILY_STEP) {
             ctx.state.code = -1
             return
         }
