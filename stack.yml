@@ -28,3 +28,10 @@ services:
     networks:
       - server
       - wechat
+
+networks:
+  wechat:
+    driver: bridge
+  server:
+    external:
+      name: server

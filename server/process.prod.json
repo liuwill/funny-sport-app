@@ -3,7 +3,7 @@
     "script": "app.js",
     "cwd": "./",
     "exec_mode": "fork",
-    "watch": true,
+    "watch": false,
     "ignore_watch": ["tmp"],
     "env": {
         "NODE_ENV": "production"

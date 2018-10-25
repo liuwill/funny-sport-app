@@ -13,7 +13,9 @@ const CONF = {
 
     qcloudAppId: '',
     qcloudSecretId: '',
-    qcloudSecretKey: '',
+    serverHost: '',
+    tunnelServerUrl: '',
+    tunnelSignatureKey: '',
 
     /**
      * MySQL 配置，用来存储 session 和用户信息
