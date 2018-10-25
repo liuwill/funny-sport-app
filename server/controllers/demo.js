@@ -27,8 +27,21 @@ module.exports = {
             ctx.state.code = -1
             return
         }
-        ctx.state.date = {
-            run: generalUtils.decryptData(appId, sessionData[0].session_key, httpRequest.encrypted, httpRequest.iv)
+        let runData = generalUtils.decryptData(appId, sessionData[0].session_key, httpRequest.encrypted, httpRequest.iv)
+        let todayStr = new Date().toLocaleDateString()
+        runData.current = 0
+
+        if (runData.stepInfoList && runData.stepInfoList.length) {
+            const lastPos = runData.stepInfoList.length - 1
+            const lastOne = runData.stepInfoList[lastPos]
+
+            const lastDate = new Date(lastOne.timestamp * 1000).toLocaleDateString()
+            if (todayStr === lastDate) {
+                runData.current = lastOne.step
+            }
+        }
+        ctx.state.data = {
+            run: runData
         }
     }
 }

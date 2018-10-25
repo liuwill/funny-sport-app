@@ -4,12 +4,13 @@
     <view class="userinfo">
         <image
             class="userinfo-avatar"
-            src="./avatar.jpg"
+            src="{{logged ? userInfo.avatarUrl : './avatar.jpg'}}"
             background-size="cover"
         ></image>
         <view class="userinfo-meta">
-            <text class="userinfo-nickname">管理员</text>
-            <text class="userinfo-nickname small">管理商品和兑换订单</text>
+            <button class="userinfo-nickname" wx:if="{{!logged}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">点击登录</button>
+            <text class="userinfo-nickname" wx:else>{{userInfo.nickName}}</text>
+            <text class="userinfo-nickname small">管理员-管理商品和兑换订单</text>
         </view>
     </view>
 

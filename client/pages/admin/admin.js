@@ -35,9 +35,47 @@ Page({
     data: {
         userInfo: {},
         logged: false,
+        logged: false,
         takeSession: false,
         requestResult: ''
     },
+    // 用户登录示例
+    bindGetUserInfo: function () {
+        if (this.data.logged) return
+
+        util.showBusy('正在登录')
+
+        const session = qcloud.Session.get()
+
+        if (session) {
+            // 第二次登录
+            // 或者本地已经有登录态
+            // 可使用本函数更新登录态
+            qcloud.loginWithCode({
+                success: res => {
+                    this.setData({ userInfo: res, logged: true })
+                    util.showSuccess('登录成功')
+                },
+                fail: err => {
+                    console.error(err)
+                    util.showModel('登录错误', err.message)
+                }
+            })
+        } else {
+            // 首次登录
+            qcloud.login({
+                success: res => {
+                    this.setData({ userInfo: res, logged: true })
+                    util.showSuccess('登录成功')
+                },
+                fail: err => {
+                    console.error(err)
+                    util.showModel('登录错误', err.message)
+                }
+            })
+        }
+    },
+
     getLocation: function () {
         wx.getLocation({
             type: 'wgs84',
@@ -52,9 +90,14 @@ Page({
         })
     },
     viewRunData: function () {
+        if (!this.data.logged) {
+            util.showModel('请先登录');
+            return
+        }
         const session = qcloud.Session.get()
 
         getWxRunResult(function (err, runData) {
+            util.showBusy('请求中...')
             qcloud.request({
                 url: `${config.service.host}/weapp/utils/decrypt`,
                 data: Object.assign({
@@ -63,7 +106,8 @@ Page({
                 }, runData),
                 method: 'POST',
                 success(result) {
-                    util.showSuccess('获取步数成功')
+                    const response = result.data.data
+                    util.showSuccess('今日步数：' + response.run.current)
                     console.log(result)
                     //   wx.navigateBack()
                     // that.setData({
@@ -144,7 +188,24 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        const session = qcloud.Session.get()
 
+        if (session) {
+            util.showBusy('登录请求中...')
+            // 第二次登录
+            // 或者本地已经有登录态
+            // 可使用本函数更新登录态
+            qcloud.loginWithCode({
+                success: res => {
+                    this.setData({ userInfo: res, logged: true })
+                    util.showSuccess('登录成功')
+                },
+                fail: err => {
+                    console.error(err)
+                    util.showModel('登录错误', err.message)
+                }
+            })
+        }
     },
 
     /**
@@ -152,4 +213,11 @@ Page({
      */
     onReady: function () {
     },
+
+    /**
+     * 用户点击右上角分享
+     */
+    onShareAppMessage: function () {
+
+    }
 })
