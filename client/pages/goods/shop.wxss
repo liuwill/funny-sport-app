@@ -2,6 +2,7 @@
 .container, page {
     background: #f8f8f8;
 }
+/*
 .header {
     width: 100%;
     text-align: center;
@@ -18,6 +19,63 @@
     padding: 0 6px;
 
     border-bottom: 6rpx solid #ff5d63;
+}
+*/
+.power-header {
+    width: 100%;
+    height: 10rem;
+    position: relative;
+}
+.header-top {
+    width: 100%;
+    height: 5rem;
+    background: linear-gradient(to right, #618ee4, #353c90);
+    box-shadow: 0 5px 10px #4d6fbc;
+}
+.header-bottom {}
+.header-card {
+    position:absolute;
+    width:70%;
+    height:7.2rem;
+    top:2.4rem;
+    left: 15%;
+    margin:auto;
+    background:#fff;
+    box-shadow: 1px 7px 5px 2px #ddd;
+}
+.user-card {
+    margin-top: 10rpx;
+    height: 100%;
+    width: 100%;
+    background: #FFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 300ms ease;
+}
+.card-avatar {
+    width: 100rpx;
+    height: 100rpx;
+    margin: 20rpx;
+    border-radius: 50%;
+}
+.card-meta {
+    display: flex;
+    flex-direction: column;
+}
+.card-nickname {
+    font-size: 32rpx;
+    color: #555;
+    text-align: center;
+    background-color: white;
+}
+.card-nickname.small {
+    font-size: 24rpx;
+    color: #616065;
+}
+
+.card-nickname::after {
+  border: none;
 }
 
 .goods-body {

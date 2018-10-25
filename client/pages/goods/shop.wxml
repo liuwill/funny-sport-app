@@ -1,8 +1,22 @@
 <!--pages/goods/shop.wxml-->
 <!--pages/goods/goods.wxml-->
 <view class="container">
-    <view class="header">
-        <view class="header-tab">商品下单</view>
+    <view class="power-header">
+        <view class="header-top"></view>
+        <view class="header-bottom"></view>
+        <view class="header-card">
+            <view class="user-card">
+                <image
+                    class="card-avatar"
+                    src="{{ userData.avatar }}"
+                    background-size="cover"
+                ></image>
+                <view class="card-meta">
+                    <text class="card-nickname">{{userData.nickname}}</text>
+                    <text class="card-nickname small">当前积分：{{userData.score}}</text>
+                </view>
+            </view>
+        </view>
     </view>
 
     <view class="goods-body">
