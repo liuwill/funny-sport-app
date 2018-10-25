@@ -7,7 +7,7 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.{json,js,html}]
+[*.{json,js,yml,html}]
 indent_style = space
 indent_size = 4
 
@@ -24,9 +24,5 @@ indent_style = tab
 
 # Matches the exact files either package.json or .travis.yml
 [{.travis.yml}]
-indent_style = space
-indent_size = 2
-
-[*.{yml}]
 indent_style = space
 indent_size = 2

@@ -46,4 +46,18 @@ const CONF = {
     wxMessageToken: 'abcdefgh'
 }
 
+const configFields = {
+    MYSQL_HOST: 'host',
+    MYSQL_POST: 'port',
+    MYSQL_USER: 'user',
+    MYSQL_SCHEMA: 'db',
+    MYSQL_PASSWORD: 'pass'
+}
+for (let item in configFields) {
+    if (process.env[item]) {
+        let key = configFields[item]
+        CONF.mysql[key] = process.env[item]
+    }
+}
+
 module.exports = CONF
