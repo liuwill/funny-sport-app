@@ -13,13 +13,15 @@ module.exports = {
         const wxUser = ctx.state.$wxInfo.userinfo
         const httpRequest = ctx.request.body
         if (!httpRequest.step || isNaN(httpRequest.step)) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '参数错误' }
             return
         }
 
         const existUsers = await mysql('cUserInfo').select('*').where({ open_id: wxUser.openId })
         if (!existUsers || !existUsers.length) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '用户不存在' }
             return
         }
         const existUser = existUsers[0]
@@ -28,7 +30,8 @@ module.exports = {
         }))
         const currentStep = todayStep[0]['step'] || 0
         if (currentStep >= httpRequest.step || httpRequest.step > MAX_DAILY_STEP) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '步数不正确' }
             return
         }
         let suggest = Math.round((httpRequest.step - currentStep) / 1000)
@@ -49,13 +52,15 @@ module.exports = {
         const wxUser = ctx.state.$wxInfo.userinfo
         const httpRequest = ctx.request.body
         if (!httpRequest.step || isNaN(httpRequest.step)) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '参数错误' }
             return
         }
 
         const existUsers = await mysql('cUserInfo').select('*').where({ open_id: wxUser.openId })
         if (!existUsers || !existUsers.length) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '用户不存在，请先登录' }
             return
         }
         const existUser = existUsers[0]
@@ -64,7 +69,8 @@ module.exports = {
         }))
         const currentStep = todayStep[0]['step'] || 0
         if (currentStep >= httpRequest.step || httpRequest.step > MAX_DAILY_STEP) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '步数不正确' }
             return
         }
         // 以上代码，检查是否可以获得积分
@@ -107,7 +113,8 @@ module.exports = {
             await next()
         }).catch(async (err) => {
             // await trx.rollback()
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '请求处理失败' }
             console.log(err.message)
             await next()
         })

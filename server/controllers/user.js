@@ -10,19 +10,22 @@ module.exports = {
             // loginState 为 1，登录态校验成功
             ctx.state.data = ctx.state.$wxInfo.userinfo
         } else {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '请求处理失败' }
         }
     },
     data: async (ctx, next) => {
         if (!ctx.state.$wxInfo.loginState) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '请求处理失败' }
             return
         }
 
         const wxUser = ctx.state.$wxInfo.userinfo
         const existUsers = await mysql('cUserInfo').select('*').where({ open_id: wxUser.openId })
         if (!existUsers || !existUsers.length) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '请求处理失败' }
             return
         }
         const existUser = existUsers[0]

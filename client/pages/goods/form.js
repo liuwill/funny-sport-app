@@ -39,6 +39,11 @@ Page({
             data: formData,
             method: 'POST',
             success(result) {
+                if (result.data.code === 500) {
+                    util.showFail(result.data.data.msg)
+                    return
+                }
+
                 util.showSuccess('商品添加成功')
                 wx.navigateBack()
                 // that.setData({

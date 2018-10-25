@@ -106,6 +106,10 @@ Page({
                 }, runData),
                 method: 'POST',
                 success(result) {
+                    if (result.data.code === 500) {
+                        util.showFail(result.data.data.msg)
+                        return
+                    }
                     const response = result.data.data
                     util.showSuccess('今日步数：' + response.run.current)
                     console.log(result)
@@ -128,6 +132,10 @@ Page({
             url: `${config.service.host}/weapp/demo/user`,
             login: true,
             success(result) {
+                if (result.data.code === 500) {
+                    util.showFail(result.data.data.msg)
+                    return
+                }
                 const userData = result.data.data
                 util.showModel('用户：' + userData.msg.nickName, '省:' + userData.msg.province + ';市:' + userData.msg.city)
                 that.setData({
@@ -150,6 +158,11 @@ Page({
             },
             method: 'POST',
             success(result) {
+                if (result.data.code === 500) {
+                    util.showFail(result.data.data.msg)
+                    return
+                }
+
                 util.showSuccess('请求成功完成')
                 that.setData({
                     requestResult: JSON.stringify(result.data)
@@ -171,6 +184,11 @@ Page({
             },
             method: 'POST',
             success(result) {
+                if (result.data.code === 500) {
+                    util.showFail(result.data.data.msg)
+                    return
+                }
+
                 util.showSuccess('请求成功完成')
                 StepApi.accept()
                 that.setData({

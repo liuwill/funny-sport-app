@@ -24,7 +24,8 @@ module.exports = {
         })
 
         if (!sessionData || !sessionData.length) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '请求处理失败' }
             return
         }
         let runData = generalUtils.decryptData(appId, sessionData[0].session_key, httpRequest.encrypted, httpRequest.iv)

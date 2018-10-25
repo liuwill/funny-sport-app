@@ -74,13 +74,15 @@ module.exports = {
     myOrders: async (ctx) => {
         if (!ctx.state.$wxInfo.loginState) {
             ctx.state.code = -1
+            ctx.state.data = { msg: '请求处理失败' }
             return
         }
 
         const wxUser = ctx.state.$wxInfo.userinfo
         const existUsers = await mysql('cUserInfo').select('*').where({ open_id: wxUser.openId })
         if (!existUsers || !existUsers.length) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '用户不存在' }
             return
         }
         const existUser = existUsers[0]
@@ -98,6 +100,7 @@ module.exports = {
     myOrdersPage: async (ctx) => {
         if (!ctx.state.$wxInfo.loginState) {
             ctx.state.code = -1
+            // ctx.state.data = { msg: '请求处理失败' }
             return
         }
 
@@ -106,7 +109,8 @@ module.exports = {
 
         const existUsers = await mysql('cUserInfo').select('*').where({ open_id: wxUser.openId })
         if (!existUsers || !existUsers.length) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '用户不存在' }
             return
         }
         const existUser = existUsers[0]
@@ -142,12 +146,14 @@ module.exports = {
         })
 
         if (!orderList || !orderList.length) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '订单不存在' }
             return
         }
         const orderItem = orderList[0]
         if (orderItem.status !== goodsUtils.ORDER_STATUS.PAID) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '订单状态不正确' }
             return
         }
 

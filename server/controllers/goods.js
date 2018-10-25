@@ -66,12 +66,14 @@ module.exports = {
         })
 
         if (!goodsList || !goodsList.length) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '商品不存在' }
             return
         }
         const goodsItem = goodsList[0]
         if (goodsItem.stock < 1) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '库存不足' }
             ctx.state.message = '库存不足'
             return
         }
@@ -84,12 +86,14 @@ module.exports = {
         const wxUser = ctx.state.$wxInfo.userinfo
         const existUsers = await mysql('cUserInfo').select('*').where({ open_id: wxUser.openId })
         if (!existUsers || !existUsers.length) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '用户不存在' }
             return
         }
         const existUser = existUsers[0]
         if (existUser.score < goodsItem.score) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '积分不足' }
             ctx.state.message = '积分不足'
             return
         }
@@ -133,7 +137,8 @@ module.exports = {
             await next()
         }).catch(async (err) => {
             // await trx.rollback()
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '请求处理失败' }
             console.log(err.message)
             await next()
         })
@@ -178,12 +183,14 @@ module.exports = {
         })
 
         if (!goodsList || !goodsList.length) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '商品不存在' }
             return
         }
         const goodsItem = goodsList[0]
         if (!PERMIT_STATUS.includes(Number(goodsItem.status))) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '商品状态不正确' }
             return
         }
 
@@ -201,12 +208,14 @@ module.exports = {
         })
 
         if (!goodsList || !goodsList.length) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '商品不存在' }
             return
         }
         const goodsItem = goodsList[0]
         if (Number(goodsItem.status) !== goodsUtils.GOODS_ITEM_STATUS.PUBLISHED) {
-            ctx.state.code = -1
+            ctx.state.code = 500
+            ctx.state.data = { msg: '商品状态不正确' }
             return
         }
 

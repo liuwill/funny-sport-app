@@ -32,6 +32,11 @@ Page({
                 start: queryStart
             }),
             success(result) {
+                if (result.data.code === 500) {
+                    util.showFail(result.data.data.msg)
+                    return
+                }
+
                 util.showSuccess('加载成功')
                 const response = result.data.data
                 that.setData({
@@ -59,6 +64,11 @@ Page({
             },
             method: 'POST',
             success(result) {
+                if (result.data.code === 500) {
+                    util.showFail(result.data.data.msg)
+                    return
+                }
+
                 util.showSuccess('上架成功')
                 that.listGoods(true)
                 // that.setData({
@@ -82,6 +92,11 @@ Page({
             },
             method: 'POST',
             success(result) {
+                if (result.data.code === 500) {
+                    util.showFail(result.data.data.msg)
+                    return
+                }
+
                 util.showSuccess('下架成功')
                 that.listGoods(true)
                 // that.setData({
