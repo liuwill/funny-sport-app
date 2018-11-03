@@ -148,6 +148,42 @@ Page({
             }
         })
     },
+    checkRealStep: function() {
+        if (!this.data.logged) {
+            util.showModel('请先登录');
+            return
+        }
+        const session = qcloud.Session.get()
+
+        getWxRunResult(function (err, runData) {
+            util.showBusy('请求中...')
+            qcloud.request({
+                url: `${config.service.host}/weapp/award/check/all`,
+                data: Object.assign({
+                    skey: session.skey,
+                    encrypted: runData.encryptedData
+                }, runData),
+                method: 'POST',
+                success(result) {
+                    if (result.data.code === 500) {
+                        util.showFail(result.data.data.msg)
+                        return
+                    }
+                    const response = result.data.data
+                    util.showSuccess('今日步数：' + response.list[0].current)
+                    console.log(result)
+                    //   wx.navigateBack()
+                    // that.setData({
+                    //   requestResult: JSON.stringify(result.data)
+                    // })
+                },
+                fail(error) {
+                    util.showModel('创建失败', error);
+                    console.log('request fail', error);
+                }
+            })
+        })
+    },
     checkStep: function () {
         var that = this
         qcloud.request({
@@ -206,8 +242,13 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        const session = qcloud.Session.get()
+        wx.showShareMenu({
+            // 要求小程序返回分享目标信息
+            withShareTicket: true
+        });
 
+        /*
+        const session = qcloud.Session.get()
         if (session) {
             util.showBusy('登录请求中...')
             // 第二次登录
@@ -224,6 +265,7 @@ Page({
                 }
             })
         }
+        */
     },
 
     /**
@@ -236,6 +278,28 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function () {
-
+        return {
+            title: '转发dom',
+            path: `pages/admin/admin`,
+            success: function (res) {
+                // 转发成功
+                console.log("转发成功:" + JSON.stringify(res));
+                var shareTickets = res.shareTickets;
+                // if (shareTickets.length == 0) {
+                //   return false;
+                // }
+                // //可以获取群组信息
+                // wx.getShareInfo({
+                //   shareTicket: shareTickets[0],
+                //   success: function (res) {
+                //     console.log(res)
+                //   }
+                // })
+            },
+            fail: function (res) {
+                // 转发失败
+                console.log("转发失败:" + JSON.stringify(res));
+            }
+        }
     }
 })

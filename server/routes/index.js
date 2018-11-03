@@ -18,6 +18,8 @@ router.post('/utils/decrypt', validationMiddleware, controllers.demo.decrypt)
 // --- 步数检查功能 --- //
 // 检查是否有可以领取的积分
 router.post('/award/check/step', validationMiddleware, controllers.award.checkStep)
+// 检查用户步数，使用真实步数
+router.post('/award/check/all', validationMiddleware, controllers.award.checkRealStep)
 // 领取步数积分
 router.post('/award/accept/step', validationMiddleware, controllers.award.acceptStepAward)
 

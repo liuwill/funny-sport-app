@@ -56,7 +56,7 @@
         </view>
 
         <view class="module-item">
-            <view class="item-data" bindtap="checkStep">
+            <view class="item-data" bindtap="checkRealStep">
                 <text>检查步数积分</text>
             </view>
         </view>

@@ -1,9 +1,70 @@
 const qcloud = require('../qcloud')
 const { mysql } = qcloud
 const generalUtils = require('../utils/general')
+const config = require('../config')
 const MAX_DAILY_STEP = 100000
 
 module.exports = {
+    checkRealStep: async (ctx) => {
+        const appId = config.appId
+        const httpRequest = ctx.request.body
+
+        if (!ctx.state.$wxInfo.loginState) {
+            ctx.state.code = -1
+            return
+        }
+
+        const wxUser = ctx.state.$wxInfo.userinfo
+        const sessionData = await mysql('cSessionInfo').select('*').where({
+            skey: httpRequest.skey
+        })
+
+        if (!sessionData || !sessionData.length) {
+            ctx.state.code = 500
+            ctx.state.data = { msg: '请求处理失败' }
+            return
+        }
+        let runData = generalUtils.decryptData(appId, sessionData[0].session_key, httpRequest.encrypted, httpRequest.iv)
+        if (runData) {
+            runData.current = generalUtils.pickCurrentStep(runData)
+        }
+
+        if (!runData.current) {
+            ctx.body = {
+                code: 500,
+                status: 1,
+                data: { msg: '参数错误' }
+            }
+            return
+        }
+
+        const existUsers = await mysql('cUserInfo').select('*').where({ open_id: wxUser.openId })
+        if (!existUsers || !existUsers.length) {
+            ctx.state.code = 500
+            ctx.state.data = { msg: '用户不存在' }
+            return
+        }
+        const existUser = existUsers[0]
+        const todayStep = await mysql('cUserStep').sum('step as step').where(mysql.raw('user_id = :user_id AND DATE(create_time) = CURDATE()', {
+            user_id: existUser.id
+        }))
+        const currentStep = todayStep[0]['step'] || 0
+        if (currentStep >= runData.current || runData.current > MAX_DAILY_STEP) {
+            ctx.state.code = 500
+            ctx.state.data = { msg: '没有生成新的步数' }
+            return
+        }
+        let suggest = Math.round((runData.current - currentStep) / 1000)
+
+        ctx.state.data = {
+            list: [{
+                type: 'step',
+                current: runData.current,
+                suggest,
+                timestamp: Date.now()
+            }]
+        }
+    },
     checkStep: async (ctx) => {
         if (!ctx.state.$wxInfo.loginState) {
             ctx.state.code = -1

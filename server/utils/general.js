@@ -40,7 +40,24 @@ const decryptData = function (appId, sessionKey, encryptedData, iv) {
     return decoded
 }
 
+const pickCurrentStep = (runData) => {
+    let todayStr = new Date().toLocaleDateString()
+    runData.current = 0
+
+    if (runData.stepInfoList && runData.stepInfoList.length) {
+        const lastPos = runData.stepInfoList.length - 1
+        const lastOne = runData.stepInfoList[lastPos]
+
+        const lastDate = new Date(lastOne.timestamp * 1000).toLocaleDateString()
+        if (todayStr === lastDate) {
+            runData.current = lastOne.step
+        }
+    }
+    return runData.current
+}
+
 module.exports = {
     getIp,
-    decryptData
+    decryptData,
+    pickCurrentStep
 }
