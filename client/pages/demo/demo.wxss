@@ -1,0 +1,31 @@
+/* client/pages/demo/demo.wxss */
+page {
+    background: #F6F6F6;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.container {
+    padding-top: 40rpx;
+}
+.card {
+    margin-top: 20rem;
+    width:70%;
+    height:16rem;
+    top:2.4rem;
+    left: 15%;
+    margin:auto;
+    background:#fff;
+    box-shadow: 1px 7px 5px 2px #ddd;
+
+    padding: 30rpx;
+}
+.meta {
+    margin-top: 20rpx;
+    color: #666;
+}
+.meta.title {
+    text-align: center;
+    color: #4d4d4d;
+}

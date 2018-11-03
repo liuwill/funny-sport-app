@@ -46,6 +46,12 @@
                 <text>地理位置</text>
             </view>
         </view>
+
+        <view class="module-item">
+            <navigator url="../demo/demo" open-type="navigate" class="module-item-text">
+                <text>分享效果预览</text>
+            </navigator>
+        </view>
     </view>
 
     <view class="module-group">

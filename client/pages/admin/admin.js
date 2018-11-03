@@ -290,6 +290,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        console.log('admin', options)
         wx.showShareMenu({
             // 要求小程序返回分享目标信息
             withShareTicket: true
@@ -328,7 +329,7 @@ Page({
     onShareAppMessage: function () {
         return {
             title: '转发dom',
-            path: `pages/admin/admin`,
+            path: `pages/index/index`,
             success: function (res) {
                 // 转发成功
                 console.log("转发成功:" + JSON.stringify(res));

@@ -1,0 +1,18 @@
+<!--client/pages/demo/demo.wxml-->
+<view class="container">
+    <!-- 用户登录测试 -->
+    <view class="card">
+        <view class="meta title">
+            <text>转发预览</text>
+        </view>
+        <view class="meta user-meta" wx:if="{{user.id}}">
+            <text>当前用户: {{user.nickname}}</text>
+        </view>
+        <view class="meta inviter-meta" wx:if="{{inviter.id}}">
+            <text>邀请人: {{inviter.name}}</text>
+        </view>
+        <view class="meta inviter-meta" wx:if="{{!user.id && inviter.id && !loading}}">
+            <button>接受邀请</button>
+        </view>
+    </view>
+</view>

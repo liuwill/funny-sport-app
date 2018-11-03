@@ -61,6 +61,17 @@ CREATE TABLE `cUserStep` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户计步信息表';
 
+DROP TABLE IF EXISTS `cUserInvite`;
+CREATE TABLE `cUserInvite` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `inviter_id` int(11) UNSIGNED NOT NULL,
+  `score` decimal(11,2) UNSIGNED DEFAULT 0,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int(11) UNSIGNED DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户推荐信息表';
+
 DROP TABLE IF EXISTS `cUserScoreRecord`;
 CREATE TABLE `cUserScoreRecord` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,

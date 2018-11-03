@@ -23,6 +23,9 @@ var config = {
         // 获取商品详情
         goodsInfoUrl: `${host}/weapp/goods/info`,
 
+        // 兑换商品
+        exchangeUrl: `${host}/weapp/goods/info`,
+
         // 登录地址，用于建立会话
         loginUrl: `${host}/weapp/login`,
 
