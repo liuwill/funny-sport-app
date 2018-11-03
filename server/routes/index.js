@@ -22,6 +22,8 @@ router.post('/award/check/step', validationMiddleware, controllers.award.checkSt
 router.post('/award/check/all', validationMiddleware, controllers.award.checkRealStep)
 // 领取步数积分
 router.post('/award/accept/step', validationMiddleware, controllers.award.acceptStepAward)
+// 领取步数积分，使用真实步数
+router.post('/award/pick/step', validationMiddleware, controllers.award.acceptStepAward)
 
 // --- 商品相关接口 --- //
 // 列出所有商品

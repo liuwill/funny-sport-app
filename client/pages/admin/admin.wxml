@@ -62,7 +62,7 @@
         </view>
 
         <view class="module-item">
-            <view class="item-data" bindtap="acceptStepAward">
+            <view class="item-data" bindtap="pickStepAward">
                 <text>领取计步积分</text>
             </view>
         </view>

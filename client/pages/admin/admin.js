@@ -30,6 +30,15 @@ let StepApi = {
         randStep += Math.round(Math.random() * 10000)
     }
 }
+let currentStep = 0
+let stepStorage = {
+    set: (val) => {
+        currentStep = val
+    },
+    get: () => {
+        return currentStep
+    }
+}
 
 Page({
     data: {
@@ -170,7 +179,9 @@ Page({
                         return
                     }
                     const response = result.data.data
-                    util.showSuccess('今日步数：' + response.list[0].current)
+                    const currentStep = response.list[0].current
+                    stepStorage.set(currentStep)
+                    util.showSuccess('今日步数：' + currentStep)
                     console.log(result)
                     //   wx.navigateBack()
                     // that.setData({
@@ -208,6 +219,43 @@ Page({
                 util.showModel('请求失败', error);
                 console.log('request fail', error);
             }
+        })
+    },
+    pickStepAward: function() {
+        if (!this.data.logged) {
+            util.showModel('请先登录');
+            return
+        }
+        const session = qcloud.Session.get()
+
+        getWxRunResult(function (err, runData) {
+            util.showBusy('请求中...')
+            qcloud.request({
+                url: `${config.service.host}/weapp/award/pick/step`,
+                data: Object.assign({
+                    step: stepStorage.get(),
+                    skey: session.skey,
+                    encrypted: runData.encryptedData
+                }, runData),
+                method: 'POST',
+                success(result) {
+                    if (result.data.code === 500) {
+                        util.showFail(result.data.data.msg)
+                        return
+                    }
+                    const response = result.data.data
+                    util.showSuccess('领取步数积分成功')
+                    console.log(result)
+                    //   wx.navigateBack()
+                    // that.setData({
+                    //   requestResult: JSON.stringify(result.data)
+                    // })
+                },
+                fail(error) {
+                    util.showModel('创建失败', error);
+                    console.log('request fail', error);
+                }
+            })
         })
     },
     acceptStepAward: function () {
