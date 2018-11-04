@@ -8,10 +8,10 @@
         <view class="meta user-meta" wx:if="{{user.id}}">
             <text>当前用户: {{user.nickname}}</text>
         </view>
-        <view class="meta inviter-meta" wx:if="{{inviter.id}}">
+        <view class="meta inviter-meta" wx:if="{{inviter.uid}}">
             <text>邀请人: {{inviter.name}}</text>
         </view>
-        <view class="meta inviter-meta" wx:if="{{!user.id && inviter.id && !loading}}">
+        <view class="meta inviter-meta" wx:if="{{!user.id && inviter.uid && !loading}}">
             <button bindtap="loginInvite">接受邀请</button>
         </view>
         <view class="meta inviter-meta" wx:if="{{user.id}}">

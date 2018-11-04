@@ -71,10 +71,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log('demo', options)
-    this.setData({
-      inviter: options
-    })
+    if (options) {
+        console.log('demo', options)
+        this.setData({
+            inviter: options
+        })
+    }
     wx.showShareMenu({
       // 要求小程序返回分享目标信息
       withShareTicket: false
@@ -131,7 +133,7 @@ Page({
       url: `${config.service.host}/weapp/invite`,
       login: true,
       data: {
-        uid: this.data.inviter.id
+        uid: this.data.inviter.uid
       },
       method: 'POST',
       success(result) {
@@ -197,8 +199,8 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    console.log(userApi.get().id)
     const userData = userApi.get()
+    console.log('发出邀请', `uid=${userData.id}&name=${userData.nickname}`)
     return {
       title: '分享预览',
       path: `pages/demo/demo?uid=${userData.id}&name=${userData.nickname}`,
