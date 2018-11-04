@@ -39,6 +39,9 @@ page {
     color: #616065;
 }
 
+.userinfo-nickname.logout {
+    color: #007AFF;
+}
 .userinfo-nickname::after {
   border: none;
 }

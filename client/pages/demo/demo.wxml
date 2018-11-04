@@ -12,7 +12,13 @@
             <text>邀请人: {{inviter.name}}</text>
         </view>
         <view class="meta inviter-meta" wx:if="{{!user.id && inviter.id && !loading}}">
-            <button>接受邀请</button>
+            <button bindtap="loginInvite">接受邀请</button>
         </view>
+        <view class="meta inviter-meta" wx:if="{{user.id}}">
+            <button bindtap="logout">退出登录</button>
+        </view>
+        <navigator url="../admin/admin" open-type="navigate" class="meta">
+            <button>返回首页</button>
+        </navigator>
     </view>
 </view>

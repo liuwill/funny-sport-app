@@ -24,6 +24,8 @@ router.post('/award/check/all', validationMiddleware, controllers.award.checkRea
 router.post('/award/accept/step', validationMiddleware, controllers.award.acceptStepAward)
 // 领取步数积分，使用真实步数
 router.post('/award/pick/step', validationMiddleware, controllers.award.acceptStepAward)
+// 领取邀请积分
+router.post('/award/pick/invite', validationMiddleware, controllers.award.pickInviteScore)
 
 // --- 商品相关接口 --- //
 // 列出所有商品
@@ -57,6 +59,8 @@ router.post('/goods/exchange', validationMiddleware, controllers.goods.exchange)
 // --- 登录与授权 Demo --- //
 // 登录接口
 router.get('/login', authorizationMiddleware, controllers.login)
+// 记录邀请关系
+router.post('/invite', validationMiddleware, controllers.user.invite)
 // 用户信息接口（可以用来验证登录态）
 router.get('/user', validationMiddleware, controllers.user.wechat)
 router.get('/user/data', validationMiddleware, controllers.user.data)

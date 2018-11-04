@@ -51,18 +51,33 @@ module.exports = {
         const currentStep = todayStep[0]['step'] || 0
         if (currentStep >= runData.current || runData.current > MAX_DAILY_STEP) {
             ctx.state.code = 500
-            ctx.state.data = { msg: '没有生成新的步数' }
+            ctx.state.data = { msg: '没有生成新的步' }
             return
         }
         let suggest = Math.round((runData.current - currentStep) / 1000)
+        const awardList = [{
+            type: 'step',
+            current: runData.current,
+            suggest,
+            score: suggest,
+            timestamp: Date.now()
+        }]
 
+        // 获取邀请积分
+        const inviteAwards = await mysql('cUserInvite').select('*').where({ user_id: existUser.id })
+        if (inviteAwards && inviteAwards.length) {
+            inviteAwards.forEach(item => {
+                awardList.push({
+                    type: 'invite',
+                    suggest: item.score,
+                    score: item.score,
+                    id: item.id,
+                    timestamp: item.create_time.valueOf()
+                })
+            })
+        }
         ctx.state.data = {
-            list: [{
-                type: 'step',
-                current: runData.current,
-                suggest,
-                timestamp: Date.now()
-            }]
+            list: awardList
         }
     },
     checkStep: async (ctx) => {
@@ -274,6 +289,78 @@ module.exports = {
                 origin: currentStep,
                 step: addStep,
                 score: suggest
+            }
+            await next()
+        }).catch(async (err) => {
+            // await trx.rollback()
+            ctx.state.code = 500
+            ctx.state.data = { msg: '请求处理失败' }
+            console.log(err.message)
+            await next()
+        })
+    },
+    pickInviteScore: async (ctx, next) => {
+        if (!ctx.state.$wxInfo.loginState) {
+            ctx.state.code = -1
+            return
+        }
+
+        const wxUser = ctx.state.$wxInfo.userinfo
+        const httpRequest = ctx.request.body
+        if (!httpRequest.score || isNaN(httpRequest.score) || !httpRequest.id || isNaN(httpRequest.id)) {
+            ctx.state.code = 500
+            ctx.state.data = { msg: '参数错误' }
+            return
+        }
+
+        const existUsers = await mysql('cUserInfo').select('*').where({ open_id: wxUser.openId })
+        if (!existUsers || !existUsers.length) {
+            ctx.state.code = 500
+            ctx.state.data = { msg: '用户不存在，请先登录' }
+            return
+        }
+        const existUser = existUsers[0]
+        const inviteRelation = await mysql('cUserInvite').select('*').where({ user_id: existUser.id, id: httpRequest.id })
+        if (!inviteRelation || !inviteRelation.length) {
+            ctx.state.code = 500
+            ctx.state.data = { msg: '邀请记录不存在' }
+            return
+        } else if (inviteRelation[0].status !== 0) {
+            ctx.body = {
+                status: 100,
+                code: 100,
+                msg: '积分已经过期'
+            }
+            return
+        } else if (inviteRelation[0].score !== httpRequest.score) {
+            ctx.body = {
+                status: 100,
+                code: 100,
+                msg: '积分不匹配'
+            }
+            return
+        }
+
+        mysql.transaction(async function (trx) {
+            // trx = await mysql.transaction()
+            await mysql('cUserInfo')
+                .where({ open_id: wxUser.openId })
+                .increment('score', inviteRelation[0].score)
+                .transacting(trx)
+            await mysql('cUserInvite').where({ id: httpRequest.id }).update({
+                status: 1
+            }).transacting(trx)
+            await mysql.insert({
+                user_id: existUser.id,
+                source: 'invite',
+                score: inviteRelation[0].score,
+                create_time: new Date()
+            }).into('cUserScoreRecord').transacting(trx)
+
+            await trx.commit()
+        }).then(async () => {
+            ctx.state.data = {
+                score: inviteRelation[0].score
             }
             await next()
         }).catch(async (err) => {

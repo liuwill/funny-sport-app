@@ -8,7 +8,7 @@
             background-size="cover"
         ></image>
         <view class="userinfo-meta">
-            <button class="userinfo-nickname" wx:if="{{!logged}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">点击登录</button>
+            <button class="userinfo-nickname logout" wx:if="{{!logged}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">点击登录</button>
             <text class="userinfo-nickname" wx:else>{{userInfo.nickName}}</text>
             <text class="userinfo-nickname small">管理员-管理商品和兑换订单</text>
         </view>

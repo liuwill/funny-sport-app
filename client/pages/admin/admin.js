@@ -44,7 +44,6 @@ Page({
     data: {
         userInfo: {},
         logged: false,
-        logged: false,
         takeSession: false,
         requestResult: ''
     },
@@ -100,7 +99,7 @@ Page({
     },
     viewRunData: function () {
         if (!this.data.logged) {
-            util.showModel('请先登录');
+            util.showModel('登录提醒', '请先登录');
             return
         }
         const session = qcloud.Session.get()
@@ -135,6 +134,11 @@ Page({
         })
     },
     visitUserInfo: function () {
+        if (!this.data.logged) {
+            util.showModel('登录提醒', '请先登录');
+            return
+        }
+
         util.showBusy('请求中...')
         var that = this
         qcloud.request({
@@ -159,7 +163,7 @@ Page({
     },
     checkRealStep: function() {
         if (!this.data.logged) {
-            util.showModel('请先登录');
+            util.showModel('登录提醒', '请先登录');
             return
         }
         const session = qcloud.Session.get()
@@ -196,6 +200,11 @@ Page({
         })
     },
     checkStep: function () {
+        if (!this.data.logged) {
+            util.showModel('登录提醒', '请先登录');
+            return
+        }
+
         var that = this
         qcloud.request({
             url: `${config.service.host}/weapp/award/check/step`,
@@ -223,7 +232,7 @@ Page({
     },
     pickStepAward: function() {
         if (!this.data.logged) {
-            util.showModel('请先登录');
+            util.showModel('登录提醒', '请先登录');
             return
         }
         const session = qcloud.Session.get()
@@ -259,6 +268,11 @@ Page({
         })
     },
     acceptStepAward: function () {
+        if (!this.data.logged) {
+            util.showModel('登录提醒', '请先登录');
+            return
+        }
+
         var that = this
         qcloud.request({
             url: `${config.service.host}/weapp/award/accept/step`,

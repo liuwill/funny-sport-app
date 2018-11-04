@@ -11,11 +11,23 @@ var config = {
     service: {
         host,
 
-        // 检查计步情况
+        // 检查计步情况(模拟步数)
         checkStepUrl: `${host}/weapp/award/check/step`,
 
-        // 获取计步奖励
+        // 获取计步奖励（模拟步数）
         acceptStepAwardUrl: `${host}/weapp/award/accept/step`,
+
+        // 检查所有可以领取的积分
+        checkAllScoreUrl: `${host}/weapp/award/check/all`,
+
+        // 获取真实计步奖励
+        pickStepAwardUrl: `${host}/weapp/award/pick/step`,
+
+        // 获取邀请积分
+        pickStepAwardUrl: `${host}/weapp/award/pick/invite`,
+
+        // 记录邀请关系
+        inviteUrl: `${host}/weapp/invite`,
 
         // 获取商品列表
         listGoodsUrl: `${host}/weapp/goods/list`,
